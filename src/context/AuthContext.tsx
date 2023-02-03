@@ -30,6 +30,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       const { user: userData } = await signInWithPopup(auth, provider);
 
       if (userData) {
+        console.log(userData);
         setUser({
           avatar: userData.photoURL,
           id: userData.uid,
