@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { Id, toast } from "react-toastify";
 
 import colors from "assets/colors";
 
@@ -7,8 +7,12 @@ type ToastOptions = {
   type: "error" | "success";
 };
 
-export const useToast = () => {
-  const showToast = ({ message, type }: ToastOptions) =>
+type UseToastReturn = {
+  showToast: (ToastOptions) => Id;
+};
+
+export const useToast = (): UseToastReturn => {
+  const showToast = ({ message, type }: ToastOptions): Id =>
     toast(message, {
       position: "top-right",
       autoClose: 3000,

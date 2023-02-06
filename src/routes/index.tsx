@@ -3,6 +3,8 @@ import { ToastContainer } from "react-toastify";
 
 import AuthContextProvider from "context/AuthContext";
 
+import PrivateRoute from "./privateRoute";
+
 import Login from "pages/Login";
 import Browse from "pages/Browse";
 
@@ -13,8 +15,16 @@ const AppRoutes = (): JSX.Element => {
     <BrowserRouter>
       <AuthContextProvider>
         <Routes>
+          <Route path="*" element={<h1>Not Found</h1>} />
           <Route path="/" element={<Login />} />
-          <Route path="/browse" element={<Browse />} />
+          <Route
+            path="/browse"
+            element={
+              <PrivateRoute>
+                <Browse />
+              </PrivateRoute>
+            }
+          />
         </Routes>
         <ToastContainer
           position="top-right"

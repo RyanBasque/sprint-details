@@ -17,7 +17,7 @@ const Login = (): JSX.Element => {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  const login = async () => {
+  const login = async (): Promise<void> => {
     try {
       await signInWithGoogle();
       navigate("browse");

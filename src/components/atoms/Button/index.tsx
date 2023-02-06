@@ -1,6 +1,6 @@
-import { ButtonProps } from './types';
+import { ButtonProps } from "./types";
 
-import * as S from './styles';
+import * as S from "./styles";
 
 const Button = ({ secondary, children, ...rest }: ButtonProps): JSX.Element => {
   return (

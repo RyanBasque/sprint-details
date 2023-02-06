@@ -2,6 +2,8 @@ import styled, { css } from "styled-components";
 
 import colors from "assets/colors";
 
+import { StyledReturn } from "models/styledReturn";
+
 import { ButtonProps } from "./types";
 
 export const Button = styled.button<ButtonProps>`
@@ -22,7 +24,7 @@ export const Button = styled.button<ButtonProps>`
 
   cursor: pointer;
 
-  ${({ secondary }) =>
+  ${({ secondary }): StyledReturn =>
     secondary &&
     css`
       padding: 1em;
@@ -32,7 +34,7 @@ export const Button = styled.button<ButtonProps>`
       color: ${colors.white};
     `};
 
-  ${({ small }) =>
+  ${({ small }): StyledReturn =>
     small &&
     css`
       width: unset;
