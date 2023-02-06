@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import AuthContextProvider from "../context/AuthContext";
+import AuthContextProvider from "context/AuthContext";
 
-import Login from "../pages/Login";
-import Browse from "../pages/Browse";
+import Login from "pages/Login";
+import Browse from "pages/Browse";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,15 +18,12 @@ const AppRoutes = (): JSX.Element => {
         </Routes>
         <ToastContainer
           position="top-right"
+          theme="light"
           autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
           closeOnClick
-          rtl={false}
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="light"
         />
       </AuthContextProvider>
     </BrowserRouter>

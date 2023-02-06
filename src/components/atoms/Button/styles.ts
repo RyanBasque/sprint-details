@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
-import colors from '../../../assets/colors';
+import colors from "assets/colors";
 
-import { ButtonProps } from './types';
+import { ButtonProps } from "./types";
 
 export const Button = styled.button<ButtonProps>`
   display: flex;

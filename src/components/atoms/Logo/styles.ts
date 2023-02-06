@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Sprint from "../../../assets/icons/sprint.svg";
+import Sprint from "assets/icons/sprint.svg";
 
 export const IcoSprint = styled.i`
   mask: url(${Sprint});

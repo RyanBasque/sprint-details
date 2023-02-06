@@ -1,7 +1,8 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-import { auth } from "../services/firebase";
+import { useToast } from "hooks/useToast";
+import { auth } from "services/firebase";
 
 const provider = new GoogleAuthProvider();
 
@@ -22,15 +23,18 @@ type AuthContextType = {
 
 export const AuthContext = createContext({} as AuthContextType);
 
-const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
+const AuthContextProvider = ({
+  children,
+}: AuthContextProviderProps): JSX.Element => {
+  const { showToast } = useToast();
+
   const [user, setUser] = useState<User>();
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (): Promise<void> => {
     try {
       const { user: userData } = await signInWithPopup(auth, provider);
 
       if (userData) {
-        console.log(userData);
         setUser({
           avatar: userData.photoURL,
           id: userData.uid,
@@ -40,9 +44,10 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         return;
       }
 
-      throw new Error("Login missing data");
-    } catch (error) {
-      console.error(error);
+      showToast({ message: "Login missing data", type: "error" });
+    } catch (err) {
+      const error = err as Error;
+      showToast({ message: error.message, type: "error" });
     }
   };
 

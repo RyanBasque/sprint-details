@@ -1,19 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight, AiOutlineGoogle } from "react-icons/ai";
 
-import Button from "../../components/atoms/Button";
-import Logo from "../../components/atoms/Logo";
+import Button from "components/atoms/Button";
+import Logo from "components/atoms/Logo";
 
-import { useToast } from "../../hooks/useToast";
+import { useToast } from "hooks/useToast";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "context/AuthContext";
 
-import colors from "../../assets/colors";
+import colors from "assets/colors";
 
 import * as S from "./styles";
 
 const Login = (): JSX.Element => {
   const { signInWithGoogle } = useAuth();
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const login = async () => {
@@ -24,7 +25,7 @@ const Login = (): JSX.Element => {
       const error = err as Error;
 
       console.error(error.message);
-      useToast({ message: error.message, type: "error" });
+      showToast({ message: error.message, type: "error" });
     }
   };
 
