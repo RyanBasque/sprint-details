@@ -22,7 +22,6 @@ export const globalBodyStyle = css`
 
   body {
     overflow: hidden;
-    font-family: 'Pokemon Fire Red', sans-serif;
   }
 
   html,

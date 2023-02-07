@@ -4,7 +4,7 @@ import colors from "assets/colors";
 
 export const Container = styled.div`
   width: 100%;
-  height: 70px;
+  height: 50px;
 
   background-color: transparent;
 
@@ -28,6 +28,8 @@ export const Button = styled.button`
   background-color: transparent;
 
   border: none;
+
+  cursor: pointer;
 
   p {
     margin-left: 10px;

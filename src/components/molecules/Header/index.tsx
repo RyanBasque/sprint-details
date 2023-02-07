@@ -1,6 +1,8 @@
+import { Input, InputGroup } from "rsuite";
+import SearchIcon from "@rsuite/icons/Search";
+
 import { useAuth } from "context/AuthContext";
 
-import Input from "components/atoms/Input";
 import Logo from "components/atoms/Logo";
 
 import * as S from "./styles";
@@ -14,7 +16,12 @@ const HeaderBar = (): JSX.Element => {
         <Logo color="#FFFF" />
       </S.LogoContainer>
       <S.InputContainer>
-        <Input name="findCard" id="findCard" placeholder="Pesquisar card" />
+        <InputGroup>
+          <Input placeholder="Pesquisar por Cards e Sprints" />
+          <InputGroup.Button>
+            <SearchIcon />
+          </InputGroup.Button>
+        </InputGroup>
       </S.InputContainer>
       {user?.avatar && (
         <S.Profile>
