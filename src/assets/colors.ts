@@ -12,9 +12,9 @@ const colors: Colors = {
   "dark-yellow": "#9E8B20",
 
   black: "#000000",
-  blue: "#17699D",
+  blue: "#0052cc",
   graphite: "#5A566A",
-  gray: "#CBCBCB",
+  gray: "#949d96",
   green: "#1CD80E",
   lime: "#7BCF00",
   orange: "#FF9900",

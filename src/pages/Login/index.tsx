@@ -35,9 +35,9 @@ const Login = (): JSX.Element => {
         <Logo />
       </S.LogoContainer>
       <S.ButtonContainer>
-        <Button secondary onClick={login}>
-          <AiOutlineGoogle color={colors.white} size={24} />
-          Entrar com o Google
+        <Button tertiary onClick={login}>
+          <AiOutlineGoogle size={24} />
+          <p>Entrar com o Google</p>
           <AiOutlineArrowRight />
         </Button>
       </S.ButtonContainer>

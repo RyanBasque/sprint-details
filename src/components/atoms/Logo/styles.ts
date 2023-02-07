@@ -1,11 +1,19 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+import { StyledReturn } from "models/styledReturn";
 
 import Sprint from "assets/icons/sprint.svg";
 
-export const IcoSprint = styled.i`
+type IcoSprintParams = {
+  color: string;
+};
+
+export const IcoSprint = styled.i<IcoSprintParams>`
   mask: url(${Sprint});
   mask-size: cover;
   display: inline-block;
 
-  background-color: #0052cc;
+  ${({ color }): StyledReturn => css`
+    background-color: ${color};
+  `}
 `;

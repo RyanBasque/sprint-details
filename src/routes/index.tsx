@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import AuthContextProvider from "context/AuthContext";
@@ -18,13 +18,14 @@ const AppRoutes = (): JSX.Element => {
           <Route path="*" element={<h1>Not Found</h1>} />
           <Route path="/" element={<Login />} />
           <Route
-            path="/browse"
             element={
               <PrivateRoute>
-                <Browse />
+                <Outlet />
               </PrivateRoute>
             }
-          />
+          >
+            <Route path="/browse" element={<Browse />} />
+          </Route>
         </Routes>
         <ToastContainer
           position="top-right"

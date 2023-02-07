@@ -29,7 +29,17 @@ export const Button = styled.button<ButtonProps>`
     css`
       padding: 1em;
 
-      background-color: ${colors.red};
+      background-color: ${colors.blue};
+
+      color: ${colors.white};
+    `};
+
+  ${({ tertiary }): StyledReturn =>
+    tertiary &&
+    css`
+      padding: 1em;
+
+      background-color: ${colors.gray};
 
       color: ${colors.white};
     `};

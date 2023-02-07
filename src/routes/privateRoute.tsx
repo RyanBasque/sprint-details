@@ -7,11 +7,11 @@ type PrivateRoutesParams = {
 };
 
 const PrivateRoute = ({ children }: PrivateRoutesParams): JSX.Element => {
-  const { user: authUser } = useAuth();
+  const { user } = useAuth();
 
-  if (!authUser) {
-    return <Navigate to="/" />;
-  }
+  // if (!user) {
+  //   return <Navigate to="/" />;
+  // }
 
   return children;
 };

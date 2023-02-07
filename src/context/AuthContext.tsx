@@ -1,8 +1,9 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-import { useToast } from "hooks/useToast";
 import { auth } from "services/firebase";
+
+import { useToast } from "hooks/useToast";
 
 const provider = new GoogleAuthProvider();
 
@@ -10,6 +11,7 @@ type User = {
   id: string;
   name: string | null;
   avatar: string | null;
+  email: string | null;
 };
 
 type AuthContextProviderProps = {
@@ -39,6 +41,7 @@ const AuthContextProvider = ({
           avatar: userData.photoURL,
           id: userData.uid,
           name: userData.displayName,
+          email: userData.email,
         });
 
         return;
