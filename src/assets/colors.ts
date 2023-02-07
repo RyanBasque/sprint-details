@@ -3,7 +3,7 @@ type Colors = {
 };
 
 const colors: Colors = {
-  "light-blue": "#14A8FF",
+  "light-blue": "#2966c2",
   "light-gray": "#D9D9D9",
 
   "dark-blue": "#0076FF",

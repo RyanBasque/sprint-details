@@ -3,7 +3,7 @@ import colors from "assets/colors";
 import * as S from "./styles";
 
 type LogoParams = {
-  color: string;
+  color?: string;
 };
 
 const Logo = ({ color = colors.blue }: LogoParams): JSX.Element => {

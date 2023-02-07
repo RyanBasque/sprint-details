@@ -8,8 +8,6 @@ import { useToast } from "hooks/useToast";
 
 import { useAuth } from "context/AuthContext";
 
-import colors from "assets/colors";
-
 import * as S from "./styles";
 
 const Login = (): JSX.Element => {

@@ -7,7 +7,7 @@ export const Container = styled.header`
   align-items: center;
   justify-content: space-between;
 
-  background-color: ${colors.blue};
+  background-color: ${colors["light-blue"]};
 
   min-height: 70px;
 
