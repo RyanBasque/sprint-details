@@ -23,18 +23,17 @@ const CreateSprintModal = ({
   onClick,
 }: CreateSprintModalProps): JSX.Element => {
   const { showToast } = useToast();
+
   const [name, setName] = useState<string>("");
   const [range, setRange] = useState<RangeType>({} as RangeType);
 
-  const validateValues = (): void => {
-    const sprintValues: CreateSprintType = {
-      name,
-      dateCreated: range.dateCreated.toString(),
-      dateInit: range.dateInit.toString(),
-      dateEnd: range.dateEnd.toString(),
-    };
+  const resetValues = (): void => {
+    setName("");
+    setRange({} as RangeType);
+  };
 
-    const hasFullFilled = atLeastOneFieldFilled(sprintValues);
+  const validateValues = (): void => {
+    const hasFullFilled = atLeastOneFieldFilled({ name, ...range });
 
     if (!hasFullFilled) {
       showToast({
@@ -44,6 +43,13 @@ const CreateSprintModal = ({
 
       return;
     }
+
+    const sprintValues: CreateSprintType = {
+      name,
+      dateCreated: range.dateCreated.toString(),
+      dateInit: range.dateInit.toString(),
+      dateEnd: range.dateEnd.toString(),
+    };
 
     onClick(sprintValues);
   };
@@ -81,7 +87,13 @@ const CreateSprintModal = ({
         <Button onClick={validateValues} appearance="primary">
           Ok
         </Button>
-        <Button onClick={onClose} appearance="subtle">
+        <Button
+          appearance="subtle"
+          onClick={(): void => {
+            resetValues();
+            onClose();
+          }}
+        >
           Cancel
         </Button>
       </Modal.Footer>
