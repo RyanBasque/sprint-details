@@ -6,5 +6,5 @@ export type SprintType = {
   dateInit: Date | string;
   dateEnd: Date | string;
   id?: string;
-  cards?: CardType[];
+  cards?: Record<string, CardType>;
 };

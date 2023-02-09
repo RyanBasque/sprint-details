@@ -22,9 +22,7 @@ const NavigationBar = (): JSX.Element => {
 
   useEffect(() => {
     getData(`users/${user?.id}/sprints`, (snapshot) => {
-      const data: SprintType[] = translateObject(
-        snapshot.val()
-      ) as SprintType[];
+      const data = translateObject<SprintType>(snapshot.val());
 
       setSprints(data);
     });

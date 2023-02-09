@@ -3,8 +3,6 @@ import { Button, Input, Modal, DateRangePicker } from "rsuite";
 
 import { useToast } from "hooks/useToast";
 
-import { atLeastOneFieldFilled } from "utils/atLeastOneFieldFilled";
-
 import { SprintType } from "models/sprint";
 
 import { CreateSprintModalProps } from "./types";
@@ -33,9 +31,7 @@ const CreateSprintModal = ({
   };
 
   const validateValues = (): void => {
-    const hasFullFilled = atLeastOneFieldFilled({ name, ...range });
-
-    if (!hasFullFilled || !name) {
+    if (!name || !range.dateCreated || !range.dateInit || !range.dateEnd) {
       showToast({
         type: "error",
         message: "Preencha todos os campos para continuar",

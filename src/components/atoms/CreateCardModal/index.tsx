@@ -3,8 +3,6 @@ import { Button, DatePicker, Input, Modal } from "rsuite";
 
 import { useToast } from "hooks/useToast";
 
-import { atLeastOneFieldFilled } from "utils/atLeastOneFieldFilled";
-
 import { CreateCardModalProps } from "./types";
 
 import * as S from "./styles";
@@ -29,9 +27,7 @@ const CreateCardModal = ({
   };
 
   const validateValues = (): void => {
-    const hasFullFilled = atLeastOneFieldFilled({ name, number, timeEstimate });
-
-    if (!hasFullFilled || !name || !timeEstimate || !number) {
+    if (!name || !timeEstimate || !number || !conclusionDate) {
       showToast({
         type: "error",
         message: "Preencha todos os campos para continuar",

@@ -7,6 +7,7 @@ import PrivateRoute from "./privateRoute";
 
 import Login from "pages/Login";
 import Browse from "pages/Browse";
+import Details from "pages/Details";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -24,7 +25,9 @@ const AppRoutes = (): JSX.Element => {
               </PrivateRoute>
             }
           >
-            <Route path="/browse" element={<Browse />} />
+            <Route path="/browse" element={<Browse />}>
+              <Route path=":id" element={<Details />} />
+            </Route>
           </Route>
         </Routes>
         <ToastContainer

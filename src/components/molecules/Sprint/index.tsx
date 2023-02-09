@@ -1,8 +1,11 @@
 import { useMemo } from "react";
+
 import Createcard from "../Createcard";
 import Card from "../Card";
 
 import { translateObject } from "utils/translateObject";
+
+import { CardType } from "models/card";
 
 import { SprintParams } from "./types";
 
@@ -12,7 +15,7 @@ const Sprint = ({ data }: SprintParams): JSX.Element => {
   const sprint = useMemo(
     () =>
       data.map((element) => {
-        const cards = translateObject(element.cards || []);
+        const cards = translateObject<CardType>(element.cards);
         return { ...element, cards };
       }),
     [data]
@@ -25,11 +28,9 @@ const Sprint = ({ data }: SprintParams): JSX.Element => {
           <S.SprintName key={sprint.id}>{sprint.name}</S.SprintName>
           <Createcard key={crypto.randomUUID()} sprintId={sprint.id} />
 
-          {sprint.cards?.length ? (
-            sprint.cards.map((card) => <Card key={card.id} data={card} />)
-          ) : (
-            <></>
-          )}
+          {sprint.cards?.length
+            ? sprint.cards.map((card) => <Card key={card.id} data={card} />)
+            : null}
         </S.SprintsContainer>
       ))}
     </S.Container>
