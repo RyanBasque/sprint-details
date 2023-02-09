@@ -1,21 +1,43 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
+
+import Sprint from "../Sprint";
 import CreateSprint from "components/molecules/CreateSprint";
+
+import { useAuth } from "context/AuthContext";
+
+import { useGetData } from "hooks/useGetData";
+
+import { translateObject } from "utils/translateObject";
+
+import { SprintType } from "models/sprint";
 
 import * as S from "./styles";
 
 const NavigationBar = (): JSX.Element => {
-  // const [sprints, setSprints] = useState();
+  const { getData } = useGetData();
+  const { user } = useAuth();
 
-  // useEffect((): void => {
-  //   setSprints(getData("sprint"));
-  // }, []);
+  const [sprints, setSprints] = useState<SprintType[]>([]);
 
-  // console.log(sprints);
+  useEffect(() => {
+    getData(`users/${user?.id}/sprints`, (snapshot) => {
+      const data: SprintType[] = translateObject(
+        snapshot.val()
+      ) as SprintType[];
+
+      setSprints(data);
+    });
+  }, [user?.id]);
 
   return (
     <S.Container>
       <S.CreateSprintContainer>
         <CreateSprint />
       </S.CreateSprintContainer>
+      <S.SprintsContainer>
+        <Sprint data={sprints} />
+      </S.SprintsContainer>
     </S.Container>
   );
 };

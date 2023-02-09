@@ -5,7 +5,7 @@ import { useToast } from "hooks/useToast";
 
 import { atLeastOneFieldFilled } from "utils/atLeastOneFieldFilled";
 
-import { CreateSprintType } from "models/createSprint";
+import { SprintType } from "models/sprint";
 
 import { CreateSprintModalProps } from "./types";
 
@@ -24,18 +24,18 @@ const CreateSprintModal = ({
 }: CreateSprintModalProps): JSX.Element => {
   const { showToast } = useToast();
 
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>();
   const [range, setRange] = useState<RangeType>({} as RangeType);
 
   const resetValues = (): void => {
-    setName("");
+    setName(undefined);
     setRange({} as RangeType);
   };
 
   const validateValues = (): void => {
     const hasFullFilled = atLeastOneFieldFilled({ name, ...range });
 
-    if (!hasFullFilled) {
+    if (!hasFullFilled || !name) {
       showToast({
         type: "error",
         message: "Preencha todos os campos para continuar",
@@ -44,7 +44,7 @@ const CreateSprintModal = ({
       return;
     }
 
-    const sprintValues: CreateSprintType = {
+    const sprintValues: SprintType = {
       name,
       dateCreated: range.dateCreated.toString(),
       dateInit: range.dateInit.toString(),
@@ -73,6 +73,7 @@ const CreateSprintModal = ({
           <DateRangePicker
             block
             format="dd/MM/yyyy"
+            placeholder="Selecione um período"
             onChange={(event): void =>
               setRange({
                 dateInit: event ? event[0] : new Date(),

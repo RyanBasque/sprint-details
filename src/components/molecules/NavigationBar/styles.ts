@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import colors from "assets/colors";
-
 export const Container = styled.nav`
   width: 20vw;
   height: 100vh;
@@ -11,3 +9,5 @@ export const Container = styled.nav`
 `;
 
 export const CreateSprintContainer = styled.div``;
+
+export const SprintsContainer = styled.div``;

@@ -1,31 +1,35 @@
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
-import { useAuth } from "context/AuthContext";
-
 import { postData } from "services/postData";
 
 import { useToast } from "hooks/useToast";
 
-import CreateSprintModal from "components/atoms/CreateSprintModal";
+import { useAuth } from "context/AuthContext";
 
-import { SprintType } from "models/sprint";
+import CreateCardModal from "components/atoms/CreateCardModal";
+
+import { CardType } from "models/card";
 
 import * as S from "./styles";
 
-const CreateSprint = (): JSX.Element => {
-  const { user } = useAuth();
+type CreatecardParams = {
+  sprintId?: string;
+};
+
+const Createcard = ({ sprintId }: CreatecardParams): JSX.Element => {
   const { showToast } = useToast();
+  const { user } = useAuth();
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const handleCreateSprint = (values: SprintType): void => {
+  const handleCreateCard = (values: CardType): void => {
     setShowModal(false);
-    postData(`users/${user?.id}/sprints`, values);
+    postData(`users/${user?.id}/sprints/${sprintId}/cards`, values);
 
     showToast({
       type: "success",
-      message: "Sprint criada com sucesso",
+      message: "Card criado com sucesso",
     });
   };
 
@@ -33,18 +37,17 @@ const CreateSprint = (): JSX.Element => {
     <>
       <S.Container>
         <S.Button onClick={(): void => setShowModal(true)}>
-          <AiOutlinePlus size={20} />
-          <p>Criar Sprint</p>
+          <AiOutlinePlus size={15} />
+          <p>Criar Card</p>
         </S.Button>
       </S.Container>
-
-      <CreateSprintModal
+      <CreateCardModal
         showModal={showModal}
+        onClick={handleCreateCard}
         onClose={(): void => setShowModal(false)}
-        onClick={handleCreateSprint}
       />
     </>
   );
 };
 
-export default CreateSprint;
+export default Createcard;

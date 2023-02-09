@@ -1,7 +1,7 @@
-import { CreateSprintType } from "models/createSprint";
+import { SprintType } from "models/sprint";
 
 export type CreateSprintModalProps = {
   showModal: boolean;
   onClose: () => void;
-  onClick: (values: CreateSprintType) => void;
+  onClick: (values: SprintType) => void;
 };
