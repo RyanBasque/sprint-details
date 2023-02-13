@@ -4,7 +4,7 @@ type Colors = {
 
 const colors: Colors = {
   "light-blue": "#2966c2",
-  "light-gray": "#D9D9D9",
+  "light-gray": "#f7f7fa",
 
   "dark-blue": "#0076FF",
   "dark-gray": "#8D8D8D",

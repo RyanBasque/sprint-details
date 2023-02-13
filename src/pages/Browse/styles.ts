@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.main`
-  display: flex;
+  display: grid;
+  grid-template-columns: 0.3fr 1fr;
 `;
-
-export const DetailsContainer = styled.div``;

@@ -26,7 +26,7 @@ const AppRoutes = (): JSX.Element => {
             }
           >
             <Route path="/browse" element={<Browse />}>
-              <Route path=":id" element={<Details />} />
+              <Route path=":sprintId/:cardId" element={<Details />} />
             </Route>
           </Route>
         </Routes>

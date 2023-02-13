@@ -4,7 +4,7 @@ import colors from "assets/colors";
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
 
   padding: 5px 0 5px 35px;
 
@@ -16,5 +16,19 @@ export const Container = styled.div`
 
   &:hover {
     background-color: ${colors["light-gray"]};
+
+    ~ button {
+      background-color: red;
+    }
   }
+`;
+
+export const TrashBtn = styled.button`
+  background-color: transparent;
+  border: none;
+
+  margin-right: 10px;
+
+  display: flex;
+  align-items: center;
 `;

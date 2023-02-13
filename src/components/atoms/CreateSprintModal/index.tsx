@@ -51,7 +51,7 @@ const CreateSprintModal = ({
   };
 
   return (
-    <Modal open={showModal} onClose={onClose}>
+    <Modal open={showModal} onClose={onClose} backdrop="static">
       <Modal.Header>
         <Modal.Title>Nova sprint</Modal.Title>
       </Modal.Header>
@@ -91,7 +91,7 @@ const CreateSprintModal = ({
             onClose();
           }}
         >
-          Cancel
+          Cancelar
         </Button>
       </Modal.Footer>
     </Modal>

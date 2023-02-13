@@ -1,39 +1,55 @@
 import { createGlobalStyle, css } from "styled-components";
 
 export const globalBodyStyle = css`
-  *,
-  ::before,
-  ::after {
-    margin: 0;
+  * {
     padding: 0;
-    box-sizing: border-box;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
     outline: none;
+    box-sizing: border-box;
+  }
+
+  .rs-modal-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   html {
     scroll-behavior: smooth;
   }
 
-  html,
   body {
-    text-rendering: optimizeLegibility !important;
-    -webkit-font-smoothing: antialiased !important;
+    overflow-x: hidden;
   }
 
-  body {
-    overflow: hidden;
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
   }
-
-  html,
-  body,
-  #root {
-    width: 100vw;
-    height: 100vh;
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
   }
-
-  a {
-    color: inherit;
-    text-decoration: none;
+  ::-webkit-scrollbar-thumb {
+    background: #e1e1e1;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #666666;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+  }
+  ::-webkit-scrollbar-track:hover {
+    background: #666666;
+  }
+  ::-webkit-scrollbar-track:active {
+    background: #333333;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
   }
 `;
 

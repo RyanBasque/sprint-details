@@ -29,7 +29,9 @@ const Sprint = ({ data }: SprintParams): JSX.Element => {
           <Createcard key={crypto.randomUUID()} sprintId={sprint.id} />
 
           {sprint.cards?.length
-            ? sprint.cards.map((card) => <Card key={card.id} data={card} />)
+            ? sprint.cards.map((card) => (
+                <Card key={card.id} sprintId={sprint.id || ""} data={card} />
+              ))
             : null}
         </S.SprintsContainer>
       ))}

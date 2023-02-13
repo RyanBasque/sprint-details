@@ -6,8 +6,8 @@ export const Container = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 `;
 
 export const LogoContainer = styled.div`

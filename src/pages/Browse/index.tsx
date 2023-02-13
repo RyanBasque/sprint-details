@@ -11,9 +11,7 @@ const Browse = (): JSX.Element => {
       <Header />
       <S.Wrapper>
         <NavigationBar />
-        <S.DetailsContainer>
-          <Outlet />
-        </S.DetailsContainer>
+        <Outlet />
       </S.Wrapper>
     </>
   );

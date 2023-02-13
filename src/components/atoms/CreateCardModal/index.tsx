@@ -48,7 +48,7 @@ const CreateCardModal = ({
   };
 
   return (
-    <Modal open={showModal} onClose={onClose}>
+    <Modal open={showModal} onClose={onClose} backdrop="static">
       <Modal.Header>
         <Modal.Title>Novo card</Modal.Title>
       </Modal.Header>
@@ -63,7 +63,7 @@ const CreateCardModal = ({
         <S.Container>
           <p>Número</p>
           <Input
-            placeholder="CORE1-984"
+            placeholder="SQUAD1-000"
             onChange={(event): void => setNumber(event)}
           />
         </S.Container>
@@ -75,7 +75,7 @@ const CreateCardModal = ({
           />
         </S.Container>
         <S.Container>
-          <p>Data prevista de conclusão</p>
+          <p>Data de conclusão</p>
           <DatePicker
             onChange={(event): void => setConclusionDate(event?.toString())}
           />
@@ -92,7 +92,7 @@ const CreateCardModal = ({
             onClose();
           }}
         >
-          Cancel
+          Cancelar
         </Button>
       </Modal.Footer>
     </Modal>

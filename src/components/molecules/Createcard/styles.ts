@@ -4,7 +4,7 @@ import colors from "assets/colors";
 
 export const Container = styled.div`
   width: 100%;
-  height: 25px;
+  height: 30px;
 
   background-color: transparent;
 
