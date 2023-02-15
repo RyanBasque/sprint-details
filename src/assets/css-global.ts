@@ -22,6 +22,7 @@ export const globalBodyStyle = css`
 
   body {
     overflow-x: hidden;
+    overflow-y: auto;
   }
 
   ::-webkit-scrollbar {
@@ -38,15 +39,8 @@ export const globalBodyStyle = css`
     border-radius: 50px;
   }
   ::-webkit-scrollbar-track {
-    background: #666666;
     border: 0px none #ffffff;
     border-radius: 50px;
-  }
-  ::-webkit-scrollbar-track:hover {
-    background: #666666;
-  }
-  ::-webkit-scrollbar-track:active {
-    background: #333333;
   }
   ::-webkit-scrollbar-corner {
     background: transparent;

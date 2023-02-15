@@ -5,4 +5,5 @@ export type CardType = {
   number: string;
   conclusionDate?: string;
   id?: string;
+  description?: string;
 };

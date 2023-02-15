@@ -13,17 +13,23 @@ export const SprintsContainer = styled.div`
   padding-bottom: 10px;
 `;
 
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const SprintName = styled.div`
   padding: 10px 20px 10px 20px;
 
   font-size: 20px;
+`;
 
+export const TrashBtn = styled.button`
   background-color: transparent;
-  transition: background 0.5s;
+  border: none;
 
-  cursor: pointer;
+  margin-right: 10px;
 
-  &:hover {
-    background-color: ${colors["light-gray"]};
-  }
+  display: flex;
+  align-items: center;
 `;

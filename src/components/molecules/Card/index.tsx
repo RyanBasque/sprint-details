@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RxTrash } from "react-icons/rx";
 
 import DeleteCardModal from "components/atoms/DeleteCardModal";
@@ -9,11 +9,13 @@ import { CardParams } from "./types";
 import * as S from "./styles";
 
 const Card = ({ data, sprintId }: CardParams): JSX.Element => {
+  const navigate = useNavigate();
+
   const [showModal, setShowModal] = useState<boolean>(false);
   return (
     <>
-      <S.Container>
-        {data.id && <Link to={`${sprintId}/${data.id}`}>{data.name}</Link>}
+      <S.Container onClick={(): void => navigate(`${sprintId}/${data.id}`)}>
+        {data.id && <p>{data.name}</p>}
 
         <S.TrashBtn onClick={(): void => setShowModal(true)}>
           <RxTrash size={20} />

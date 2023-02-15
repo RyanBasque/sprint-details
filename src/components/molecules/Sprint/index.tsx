@@ -1,6 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { RxTrash } from "react-icons/rx";
 
-import Createcard from "../Createcard";
+import DeleteSprintModal from "components/atoms/DeleteSprintModal";
+import Createcard from "../CreateCard";
 import Card from "../Card";
 
 import { translateObject } from "utils/translateObject";
@@ -12,6 +14,8 @@ import { SprintParams } from "./types";
 import * as S from "./styles";
 
 const Sprint = ({ data }: SprintParams): JSX.Element => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const sprint = useMemo(
     () =>
       data.map((element) => {
@@ -25,8 +29,21 @@ const Sprint = ({ data }: SprintParams): JSX.Element => {
     <S.Container>
       {sprint.map((sprint) => (
         <S.SprintsContainer key={sprint.id}>
-          <S.SprintName key={sprint.id}>{sprint.name}</S.SprintName>
+          <S.Header>
+            <S.SprintName key={sprint.id}>{sprint.name}</S.SprintName>
+
+            <S.TrashBtn onClick={(): void => setShowModal(true)}>
+              <RxTrash size={20} />
+            </S.TrashBtn>
+          </S.Header>
           <Createcard key={crypto.randomUUID()} sprintId={sprint.id} />
+
+          <DeleteSprintModal
+            sprintId={sprint.id || ""}
+            sprintName={sprint.name}
+            showModal={showModal}
+            onClose={(): void => setShowModal(false)}
+          />
 
           {sprint.cards?.length
             ? sprint.cards.map((card) => (

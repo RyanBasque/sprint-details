@@ -7,43 +7,42 @@ import { useToast } from "hooks/useToast";
 
 import { setData } from "services/setData";
 
-type DeleteCardModalParams = {
-  cardId: string;
-  cardNumber: string;
+type DeleteSprintModalParams = {
+  sprintName: string;
   sprintId: string;
   showModal: boolean;
   onClose: () => void;
 };
 
-const DeleteCardModal = ({
+const DeleteSprintModal = ({
   showModal,
   onClose,
-  cardId,
   sprintId,
-  cardNumber,
-}: DeleteCardModalParams): JSX.Element => {
+  sprintName,
+}: DeleteSprintModalParams): JSX.Element => {
   const { user } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  const handleDeleteCard = (): void => {
-    setData(`users/${user?.id}/sprints/${sprintId}/cards/${cardId}`, null);
+  const handleDeleteSprint = (): void => {
+    setData(`users/${user?.id}/sprints/${sprintId}`, null);
     navigate("");
 
     showToast({
       type: "success",
-      message: "Card apagado com sucesso",
+      message: "Sprint apagada com sucesso",
     });
+    onClose();
   };
 
   return (
     <Modal open={showModal} onClose={onClose} backdrop="static">
       <Modal.Header>
-        <Modal.Title>Apagar card</Modal.Title>
+        <Modal.Title>Apagar sprint</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Deseja mesmo apagar o card {cardNumber}?</Modal.Body>
+      <Modal.Body>Deseja mesmo apagar a sprint {sprintName}?</Modal.Body>
       <Modal.Footer>
-        <Button appearance="primary" onClick={handleDeleteCard}>
+        <Button appearance="primary" onClick={handleDeleteSprint}>
           Apagar
         </Button>
         <Button appearance="subtle" onClick={onClose}>
@@ -54,4 +53,4 @@ const DeleteCardModal = ({
   );
 };
 
-export default DeleteCardModal;
+export default DeleteSprintModal;
