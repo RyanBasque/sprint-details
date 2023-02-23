@@ -9,8 +9,6 @@ export const Container = styled.div`
 
 export const SprintsContainer = styled.div`
   border-bottom: solid 2px ${colors.blue};
-
-  padding-bottom: 10px;
 `;
 
 export const Header = styled.div`
