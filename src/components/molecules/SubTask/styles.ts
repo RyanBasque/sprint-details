@@ -48,32 +48,35 @@ export const Button = styled.button`
   }
 `;
 
-export const SubtaskController = styled.div`
-  min-height: 35px;
+export const SubtaskContainer = styled.div`
+  margin-top: 20px;
 
-  display: grid;
-  grid-template-columns: 0.3fr auto;
-  gap: 10px;
+  border-radius: 5px;
 `;
 
-export const SubtaskInput = styled.input`
-  width: 100%;
+export const Subtask = styled.div`
+  &:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  transition: background 0.5s;
+
+  &:hover {
+    background-color: ${colors["light-gray"]};
+  }
+
+  cursor: pointer;
 
   padding: 10px;
 
-  border-radius: 5px;
-
-  border: solid 1px ${colors["light-gray"]};
+  border-top: solid 1px ${colors["light-gray"]};
 `;
 
-export const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+export const SubtaskNumber = styled.span`
+  color: ${colors.blue};
 
-  gap: 20px;
-
-  margin-top: 20px;
-
-  width: 100%;
+  margin-right: 20px;
 `;
+
+export const SubtaskName = styled.span``;

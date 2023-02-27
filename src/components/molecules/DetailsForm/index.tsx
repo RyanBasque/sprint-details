@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Breadcrumb, Button, DatePicker } from "rsuite";
 import { useFormik } from "formik";
@@ -16,6 +16,7 @@ import { parseDate } from "utils/parseDate";
 import { CardType } from "models/card";
 
 import * as S from "./styles";
+import { Link } from "react-router-dom";
 
 const DetailsForm = (): JSX.Element => {
   const { sprintId, cardId } = useParams();
@@ -33,8 +34,9 @@ const DetailsForm = (): JSX.Element => {
       dateCreated: cardDetails?.dateCreated || "",
       number: cardDetails?.number || "",
       timeEstimate: cardDetails?.timeEstimate || "",
-      conclusionDate: cardDetails?.conclusionDate || String(new Date()),
+      conclusionDate: cardDetails?.conclusionDate || "",
       description: cardDetails?.description || "",
+      linkedCardIfIsSubtask: cardDetails?.linkedCardIfIsSubtask || "",
     },
     onSubmit: (values): void => {
       setData(`users/${user?.id}/sprints/${sprintId}/cards/${cardId}`, values);
@@ -62,19 +64,15 @@ const DetailsForm = (): JSX.Element => {
     });
   }, [cardId]);
 
-  useEffect(() => {
-    const textarea = document.getElementById("description");
-
-    if (textarea) textarea.style.height = `${textarea.scrollHeight}px`;
-  }, [formik.values.description]);
-
   return (
     <S.Container>
       <S.Form onSubmit={formik.handleSubmit}>
         <S.Header>
           <S.BreadcrumbsContainer>
             <Breadcrumb>
-              <Breadcrumb.Item>{sprintName}</Breadcrumb.Item>
+              <Breadcrumb.Item
+                as={(): ReactElement => <Link to=" ">{sprintName}</Link>}
+              ></Breadcrumb.Item>
               <Breadcrumb.Item active>{cardDetails?.number}</Breadcrumb.Item>
             </Breadcrumb>
           </S.BreadcrumbsContainer>

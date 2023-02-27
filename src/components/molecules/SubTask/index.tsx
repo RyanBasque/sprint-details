@@ -1,29 +1,51 @@
-import { useMemo, useState } from "react";
-import { Button } from "rsuite";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 
+import SubtaskController from "../SubtaskController";
+
+import { useAuth } from "context/AuthContext";
+
+import { useGetData } from "hooks/useGetData";
+
+import { translateObject } from "utils/translateObject";
+
+import { CardType } from "models/card";
 import * as S from "./styles";
 
 const SubTask = (): JSX.Element => {
+  const { sprintId, cardId } = useParams();
+  const { getData } = useGetData();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const [subtasks, setSubtasks] = useState<CardType[]>([]);
+  const [hasSubtask, setHasSubtask] = useState<boolean>(false);
   const [showSubtasksController, setShowSubtasksController] =
     useState<boolean>(false);
 
-  const [subtaskNumber, setSubtaskNumber] = useState<string>("");
-  const [subtaskName, setSubtaskName] = useState<string>("");
-
-  const buttonIsValid = useMemo((): boolean => {
-    return !subtaskNumber || !subtaskName;
-  }, [subtaskName, subtaskNumber]);
-
   const handleUpdateControllerVier = (): void => {
     setShowSubtasksController((prev) => !prev);
-
-    if (showSubtasksController) {
-      setSubtaskName("");
-      setSubtaskNumber("");
-    }
   };
 
+  useEffect(() => {
+    getData(`users/${user?.id}/sprints/${sprintId}/cards`, (snapshot) => {
+      const value = translateObject<CardType>(snapshot.val());
+      setSubtasks(value);
+    });
+
+    getData(
+      `users/${user?.id}/sprints/${sprintId}/cards/${cardId}`,
+      (snapshot) => {
+        const isSubtask = snapshot.val();
+        setHasSubtask(!!isSubtask.linkedCardIfIsSubtask);
+      }
+    );
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardId, sprintId]);
+
+  if (hasSubtask) return <></>;
   return (
     <S.Container>
       <S.Header>
@@ -32,27 +54,29 @@ const SubTask = (): JSX.Element => {
           <AiOutlinePlus size={18} />
         </S.Button>
       </S.Header>
+      <SubtaskController
+        showSubtasksController={showSubtasksController}
+        onCancel={handleUpdateControllerVier}
+      />
 
-      {showSubtasksController && (
-        <>
-          <S.SubtaskController>
-            <S.SubtaskInput
-              placeholder="SQUAD0-000"
-              onChange={(event): void => setSubtaskNumber(event.target.value)}
-            />
-            <S.SubtaskInput
-              placeholder="O que precisa ser feito?"
-              onChange={(event): void => setSubtaskName(event.target.value)}
-            />
-          </S.SubtaskController>
-          <S.ButtonWrapper>
-            <Button type="submit" appearance="primary" disabled={buttonIsValid}>
-              Salvar
-            </Button>
-            <Button type="reset">Cancelar</Button>
-          </S.ButtonWrapper>
-        </>
-      )}
+      <S.SubtaskContainer>
+        {subtasks.length &&
+          subtasks.map((element) =>
+            element.linkedCardIfIsSubtask === cardId ? (
+              <S.Subtask
+                key={element.id}
+                onClick={(): void =>
+                  navigate(`/browse/${sprintId}/${element.id}`, {
+                    replace: true,
+                  })
+                }
+              >
+                <S.SubtaskNumber>{element.number}</S.SubtaskNumber>
+                <S.SubtaskName>{element.name}</S.SubtaskName>
+              </S.Subtask>
+            ) : null
+          )}
+      </S.SubtaskContainer>
     </S.Container>
   );
 };
