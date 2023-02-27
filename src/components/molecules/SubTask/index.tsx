@@ -4,24 +4,19 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 import SubtaskController from "../SubtaskController";
 
-import { useAuth } from "context/AuthContext";
-
-import { useGetData } from "hooks/useGetData";
+import { useGetData } from "requests/queries/useGetData";
 
 import { translateObject } from "utils/translateObject";
 
 import { CardType } from "models/card";
 import * as S from "./styles";
 
-type SubTaskProps = {
-  hasSubtask: boolean;
-};
-
-const SubTask = ({ hasSubtask }: SubTaskProps): JSX.Element | null => {
-  const { sprintId, cardId } = useParams();
-  const { user } = useAuth();
+const SubTask = (): JSX.Element | null => {
+  const { sprintId, cardId, subtaskId } = useParams();
   const { getData } = useGetData();
   const navigate = useNavigate();
+
+  const hasSubtaskId = !!subtaskId;
 
   const [subtasks, setSubtasks] = useState<CardType[]>([]);
   const [showSubtasksController, setShowSubtasksController] =
@@ -32,17 +27,21 @@ const SubTask = ({ hasSubtask }: SubTaskProps): JSX.Element | null => {
   };
 
   useEffect(() => {
-    setShowSubtasksController(false);
-
-    getData(`sprints/${sprintId}/cards/subtasks`, (snapshot) => {
-      const value = translateObject<CardType>(snapshot.val());
-      setSubtasks(value);
-    });
+    if (subtaskId) {
+      getData(`sprints/${sprintId}/cards/${cardId}/subtasks`, (snapshot) => {
+        const value = translateObject<CardType>(snapshot.val());
+        setSubtasks(value);
+      });
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardId, sprintId]);
+  }, [cardId, sprintId, subtaskId]);
 
-  if (hasSubtask) return null;
+  useEffect(() => {
+    setShowSubtasksController(false);
+  }, [cardId, sprintId, subtaskId]);
+
+  if (hasSubtaskId) return null;
   return (
     <S.Container>
       <S.Header>
@@ -57,9 +56,8 @@ const SubTask = ({ hasSubtask }: SubTaskProps): JSX.Element | null => {
       />
 
       <S.SubtaskContainer>
-        {subtasks.length &&
-          subtasks.map((element) =>
-            element.subtasks?.length ? (
+        {subtasks.length
+          ? subtasks.map((element) => (
               <S.Subtask
                 key={element.id}
                 onClick={(): void =>
@@ -71,8 +69,8 @@ const SubTask = ({ hasSubtask }: SubTaskProps): JSX.Element | null => {
                 <S.SubtaskNumber>{element.number}</S.SubtaskNumber>
                 <S.SubtaskName>{element.name}</S.SubtaskName>
               </S.Subtask>
-            ) : null
-          )}
+            ))
+          : null}
       </S.SubtaskContainer>
     </S.Container>
   );

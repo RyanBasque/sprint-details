@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "rsuite";
 
-import { useAuth } from "context/AuthContext";
+import { useSetData } from "requests/mutations/useSetData";
 
 import { useToast } from "hooks/useToast";
-
-import { setData } from "services/setData";
 
 type DeleteSprintModalParams = {
   sprintName: string;
@@ -20,12 +18,12 @@ const DeleteSprintModal = ({
   sprintId,
   sprintName,
 }: DeleteSprintModalParams): JSX.Element => {
-  const { user } = useAuth();
   const { showToast } = useToast();
+  const { setData } = useSetData();
   const navigate = useNavigate();
 
   const handleDeleteSprint = (): void => {
-    setData(`users/${user?.id}/sprints/${sprintId}`, null);
+    setData(`sprints/${sprintId}`, null);
     navigate("");
 
     showToast({

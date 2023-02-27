@@ -2,10 +2,10 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { auth } from "services/firebase";
-import { setData } from "services/setData";
+import { useSetData } from "requests/mutations/useSetData";
+import { useGetData } from "requests/queries/useGetData";
 
 import { useToast } from "hooks/useToast";
-import { useGetData } from "hooks/useGetData";
 
 const provider = new GoogleAuthProvider();
 
@@ -32,6 +32,7 @@ const AuthContextProvider = ({
 }: AuthContextProviderProps): JSX.Element => {
   const { showToast } = useToast();
   const { getData } = useGetData();
+  const { setData } = useSetData();
 
   const [user, setUser] = useState<User>();
 
@@ -51,7 +52,7 @@ const AuthContextProvider = ({
   };
 
   const createUser = (filteredUser: User): void => {
-    setData(`users/${filteredUser.id}`, filteredUser);
+    setData(`users/${filteredUser.id}`, filteredUser, true);
   };
 
   const signInWithGoogle = async (): Promise<void> => {

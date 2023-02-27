@@ -6,7 +6,7 @@ import CreateSprint from "components/molecules/CreateSprint";
 
 import { useAuth } from "context/AuthContext";
 
-import { useGetData } from "hooks/useGetData";
+import { useGetData } from "requests/queries/useGetData";
 
 import { translateObject } from "utils/translateObject";
 

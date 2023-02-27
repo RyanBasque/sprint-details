@@ -4,11 +4,9 @@ import { useParams } from "react-router-dom";
 import { Breadcrumb, Button, DatePicker } from "rsuite";
 import { useFormik } from "formik";
 
-import { setData } from "services/setData";
+import { useSetData } from "requests/mutations/useSetData";
+import { useGetData } from "requests/queries/useGetData";
 
-import { useAuth } from "context/AuthContext";
-
-import { useGetData } from "hooks/useGetData";
 import { useToast } from "hooks/useToast";
 
 import { parseDate } from "utils/parseDate";
@@ -19,9 +17,9 @@ import * as S from "./styles";
 
 const DetailsForm = (): JSX.Element => {
   const { sprintId, cardId, subtaskId } = useParams();
-  const { user } = useAuth();
   const { showToast } = useToast();
   const { getData } = useGetData();
+  const { setData } = useSetData();
 
   const [cardDetails, setCardDetails] = useState<CardType>({} as CardType);
   const [sprintName, setSprintName] = useState<string>();
@@ -37,16 +35,12 @@ const DetailsForm = (): JSX.Element => {
       description: cardDetails?.description || "",
     },
     onSubmit: (values): void => {
+      let path = `sprints/${sprintId}/cards/${cardId}`;
       if (subtaskId) {
-        setData(
-          `users/${user?.id}/sprints/${sprintId}/cards/${cardId}/subtasks/${subtaskId}`,
-          values
-        );
-      } else
-        setData(
-          `users/${user?.id}/sprints/${sprintId}/cards/${cardId}`,
-          values
-        );
+        path += `/subtasks/${subtaskId}`;
+      }
+
+      setData(path, values);
 
       showToast({
         type: "success",
@@ -60,22 +54,18 @@ const DetailsForm = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (subtaskId) {
-      getData(
-        `sprints/${sprintId}/cards/${cardId}/subtasks/${subtaskId}`,
-        (snapshot) => {
-          setCardDetails(snapshot.val());
-        }
-      );
-    } else
-      getData(`sprints/${sprintId}/cards/${cardId}`, (snapshot) => {
-        setCardDetails(snapshot.val());
-      });
+    let path = `sprints/${sprintId}/cards/${cardId}`;
+    if (subtaskId)
+      path = `sprints/${sprintId}/cards/${cardId}/subtasks/${subtaskId}`;
+
+    getData(path, (snapshot) => {
+      setCardDetails(snapshot.val());
+    });
 
     getData(`sprints/${sprintId}`, (snapshot) => {
       setSprintName(snapshot.val().name);
     });
-  }, [cardId]);
+  }, [cardId, subtaskId]);
 
   useEffect(() => {
     const textarea = document.getElementById("description");

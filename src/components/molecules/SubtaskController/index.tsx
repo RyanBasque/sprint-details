@@ -17,7 +17,7 @@ const SubtaskController = ({
   showSubtasksController,
   onCancel,
 }: SubtaskControllerProps): JSX.Element => {
-  const { sprintId, cardId } = useParams();
+  const { sprintId, cardId, subtaskId } = useParams();
   const { showToast } = useToast();
   const { user } = useAuth();
 
@@ -28,7 +28,6 @@ const SubtaskController = ({
     const values: CardType = {
       name: subtaskName,
       number: subtaskNumber,
-      linkedCardIfIsSubtask: cardId,
       dateCreated: String(new Date()),
     };
 
@@ -53,7 +52,7 @@ const SubtaskController = ({
   useEffect(() => {
     setSubtaskNumber("");
     setSubtaskName("");
-  }, [cardId, sprintId]);
+  }, [cardId, sprintId, subtaskId]);
 
   return (
     <>
