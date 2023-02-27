@@ -26,13 +26,16 @@ const SubtaskController = ({
 
   const handleCreateSubtask = (): void => {
     const values: CardType = {
-      name: subtaskNumber,
-      number: subtaskName,
+      name: subtaskName,
+      number: subtaskNumber,
       linkedCardIfIsSubtask: cardId,
       dateCreated: String(new Date()),
     };
 
-    postData(`users/${user?.id}/sprints/${sprintId}/cards`, values);
+    postData(
+      `users/${user?.id}/sprints/${sprintId}/cards/${cardId}/subtasks`,
+      values
+    );
 
     setSubtaskNumber("");
     setSubtaskName("");

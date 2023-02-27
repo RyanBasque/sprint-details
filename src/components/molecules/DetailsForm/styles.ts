@@ -55,6 +55,8 @@ export const ReactiveTextarea = styled.textarea`
   max-height: 400px;
   min-height: 100px;
 
+  resize: both;
+
   overflow-y: auto;
 
   padding: 10px;

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Breadcrumb, Button, DatePicker } from "rsuite";
 import { useFormik } from "formik";
@@ -16,10 +16,9 @@ import { parseDate } from "utils/parseDate";
 import { CardType } from "models/card";
 
 import * as S from "./styles";
-import { Link } from "react-router-dom";
 
 const DetailsForm = (): JSX.Element => {
-  const { sprintId, cardId } = useParams();
+  const { sprintId, cardId, subtaskId } = useParams();
   const { user } = useAuth();
   const { showToast } = useToast();
   const { getData } = useGetData();
@@ -36,10 +35,19 @@ const DetailsForm = (): JSX.Element => {
       timeEstimate: cardDetails?.timeEstimate || "",
       conclusionDate: cardDetails?.conclusionDate || "",
       description: cardDetails?.description || "",
-      linkedCardIfIsSubtask: cardDetails?.linkedCardIfIsSubtask || "",
     },
     onSubmit: (values): void => {
-      setData(`users/${user?.id}/sprints/${sprintId}/cards/${cardId}`, values);
+      if (subtaskId) {
+        setData(
+          `users/${user?.id}/sprints/${sprintId}/cards/${cardId}/subtasks/${subtaskId}`,
+          values
+        );
+      } else
+        setData(
+          `users/${user?.id}/sprints/${sprintId}/cards/${cardId}`,
+          values
+        );
+
       showToast({
         type: "success",
         message: "Alterações salvas",
@@ -52,17 +60,28 @@ const DetailsForm = (): JSX.Element => {
   };
 
   useEffect(() => {
-    getData(
-      `users/${user?.id}/sprints/${sprintId}/cards/${cardId}`,
-      (snapshot) => {
+    if (subtaskId) {
+      getData(
+        `sprints/${sprintId}/cards/${cardId}/subtasks/${subtaskId}`,
+        (snapshot) => {
+          setCardDetails(snapshot.val());
+        }
+      );
+    } else
+      getData(`sprints/${sprintId}/cards/${cardId}`, (snapshot) => {
         setCardDetails(snapshot.val());
-      }
-    );
+      });
 
-    getData(`users/${user?.id}/sprints/${sprintId}`, (snapshot) => {
+    getData(`sprints/${sprintId}`, (snapshot) => {
       setSprintName(snapshot.val().name);
     });
   }, [cardId]);
+
+  useEffect(() => {
+    const textarea = document.getElementById("description");
+
+    if (textarea) textarea.style.height = `${textarea.scrollHeight}px`;
+  }, [formik.values.description]);
 
   return (
     <S.Container>
@@ -70,9 +89,7 @@ const DetailsForm = (): JSX.Element => {
         <S.Header>
           <S.BreadcrumbsContainer>
             <Breadcrumb>
-              <Breadcrumb.Item
-                as={(): ReactElement => <Link to=" ">{sprintName}</Link>}
-              ></Breadcrumb.Item>
+              <Breadcrumb.Item>{sprintName}</Breadcrumb.Item>
               <Breadcrumb.Item active>{cardDetails?.number}</Breadcrumb.Item>
             </Breadcrumb>
           </S.BreadcrumbsContainer>

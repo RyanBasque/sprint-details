@@ -6,5 +6,5 @@ export type CardType = {
   conclusionDate?: string;
   id?: string;
   description?: string;
-  linkedCardIfIsSubtask?: string;
+  subtasks?: CardType[];
 };

@@ -13,14 +13,17 @@ import { translateObject } from "utils/translateObject";
 import { CardType } from "models/card";
 import * as S from "./styles";
 
-const SubTask = (): JSX.Element => {
+type SubTaskProps = {
+  hasSubtask: boolean;
+};
+
+const SubTask = ({ hasSubtask }: SubTaskProps): JSX.Element | null => {
   const { sprintId, cardId } = useParams();
-  const { getData } = useGetData();
   const { user } = useAuth();
+  const { getData } = useGetData();
   const navigate = useNavigate();
 
   const [subtasks, setSubtasks] = useState<CardType[]>([]);
-  const [hasSubtask, setHasSubtask] = useState<boolean>(false);
   const [showSubtasksController, setShowSubtasksController] =
     useState<boolean>(false);
 
@@ -29,23 +32,17 @@ const SubTask = (): JSX.Element => {
   };
 
   useEffect(() => {
-    getData(`users/${user?.id}/sprints/${sprintId}/cards`, (snapshot) => {
+    setShowSubtasksController(false);
+
+    getData(`sprints/${sprintId}/cards/subtasks`, (snapshot) => {
       const value = translateObject<CardType>(snapshot.val());
       setSubtasks(value);
     });
 
-    getData(
-      `users/${user?.id}/sprints/${sprintId}/cards/${cardId}`,
-      (snapshot) => {
-        const isSubtask = snapshot.val();
-        setHasSubtask(!!isSubtask.linkedCardIfIsSubtask);
-      }
-    );
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardId, sprintId]);
 
-  if (hasSubtask) return <></>;
+  if (hasSubtask) return null;
   return (
     <S.Container>
       <S.Header>
@@ -62,11 +59,11 @@ const SubTask = (): JSX.Element => {
       <S.SubtaskContainer>
         {subtasks.length &&
           subtasks.map((element) =>
-            element.linkedCardIfIsSubtask === cardId ? (
+            element.subtasks?.length ? (
               <S.Subtask
                 key={element.id}
                 onClick={(): void =>
-                  navigate(`/browse/${sprintId}/${element.id}`, {
+                  navigate(`/browse/${sprintId}/${cardId}/${element.id}`, {
                     replace: true,
                   })
                 }

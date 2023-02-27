@@ -36,14 +36,18 @@ const AuthContextProvider = ({
   const [user, setUser] = useState<User>();
 
   const hasUserInDatabase = (filteredUser: User): void => {
-    getData(`users/${filteredUser.id}`, (snapshot) => {
-      const userExists = snapshot.exists();
+    getData(
+      `users/${filteredUser.id}`,
+      (snapshot) => {
+        const userExists = snapshot.exists();
 
-      if (!userExists) {
-        createUser(filteredUser);
-        return;
-      }
-    });
+        if (!userExists) {
+          createUser(filteredUser);
+          return;
+        }
+      },
+      true
+    );
   };
 
   const createUser = (filteredUser: User): void => {
