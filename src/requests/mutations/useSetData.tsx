@@ -22,7 +22,7 @@ export const useSetData = (): UseGetDataReturn => {
   ): void => {
     const databaseRef = ref(
       database,
-      useFullPath ? path : `users/${user?.email}/${path}`
+      useFullPath ? path : `users/${user?.id}/${path}`
     );
     set(databaseRef, values);
   };

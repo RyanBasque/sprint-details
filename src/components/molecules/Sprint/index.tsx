@@ -46,11 +46,9 @@ const Sprint = ({ data }: SprintParams): JSX.Element => {
           />
 
           {sprint.cards?.length
-            ? sprint.cards.map((card) =>
-                !card.linkedCardIfIsSubtask ? (
-                  <Card key={card.id} sprintId={sprint.id || ""} data={card} />
-                ) : null
-              )
+            ? sprint.cards.map((card) => (
+                <Card key={card.id} sprintId={sprint.id || ""} data={card} />
+              ))
             : null}
         </S.SprintsContainer>
       ))}

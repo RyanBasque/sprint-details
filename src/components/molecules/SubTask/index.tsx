@@ -27,15 +27,13 @@ const SubTask = (): JSX.Element | null => {
   };
 
   useEffect(() => {
-    if (subtaskId) {
-      getData(`sprints/${sprintId}/cards/${cardId}/subtasks`, (snapshot) => {
-        const value = translateObject<CardType>(snapshot.val());
-        setSubtasks(value);
-      });
-    }
+    getData(`sprints/${sprintId}/cards/${cardId}/subtasks`, (snapshot) => {
+      const value = translateObject<CardType>(snapshot.val());
+      setSubtasks(value);
+    });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardId, sprintId, subtaskId]);
+  }, [cardId, sprintId]);
 
   useEffect(() => {
     setShowSubtasksController(false);

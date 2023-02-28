@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Breadcrumb, Button, DatePicker } from "rsuite";
 import { useFormik } from "formik";
 
@@ -16,6 +16,7 @@ import { CardType } from "models/card";
 import * as S from "./styles";
 
 const DetailsForm = (): JSX.Element => {
+  const navigate = useNavigate();
   const { sprintId, cardId, subtaskId } = useParams();
   const { showToast } = useToast();
   const { getData } = useGetData();
@@ -55,15 +56,18 @@ const DetailsForm = (): JSX.Element => {
 
   useEffect(() => {
     let path = `sprints/${sprintId}/cards/${cardId}`;
+
     if (subtaskId)
       path = `sprints/${sprintId}/cards/${cardId}/subtasks/${subtaskId}`;
 
     getData(path, (snapshot) => {
-      setCardDetails(snapshot.val());
+      const value = snapshot.val();
+
+      setCardDetails(value);
     });
 
     getData(`sprints/${sprintId}`, (snapshot) => {
-      setSprintName(snapshot.val().name);
+      if (snapshot.exists()) setSprintName(snapshot.val().name);
     });
   }, [cardId, subtaskId]);
 
@@ -80,7 +84,16 @@ const DetailsForm = (): JSX.Element => {
           <S.BreadcrumbsContainer>
             <Breadcrumb>
               <Breadcrumb.Item>{sprintName}</Breadcrumb.Item>
-              <Breadcrumb.Item active>{cardDetails?.number}</Breadcrumb.Item>
+              <Breadcrumb.Item
+                active={!subtaskId}
+                onClick={(): void => navigate(`/browse/${sprintId}/${cardId}`)}
+                style={{ cursor: "pointer" }}
+              >
+                {cardDetails?.number}
+              </Breadcrumb.Item>
+              {subtaskId && (
+                <Breadcrumb.Item active>{cardDetails?.number}</Breadcrumb.Item>
+              )}
             </Breadcrumb>
           </S.BreadcrumbsContainer>
           <S.Name>
