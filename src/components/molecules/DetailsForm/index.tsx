@@ -34,13 +34,13 @@ const DetailsForm = (): JSX.Element => {
       timeEstimate: cardDetails?.timeEstimate || "",
       conclusionDate: cardDetails?.conclusionDate || "",
       description: cardDetails?.description || "",
+      subtasks: cardDetails?.subtasks,
     },
     onSubmit: (values): void => {
       let path = `sprints/${sprintId}/cards/${cardId}`;
       if (subtaskId) {
         path += `/subtasks/${subtaskId}`;
       }
-
       setData(path, values);
 
       showToast({
@@ -57,8 +57,9 @@ const DetailsForm = (): JSX.Element => {
   useEffect(() => {
     let path = `sprints/${sprintId}/cards/${cardId}`;
 
-    if (subtaskId)
+    if (subtaskId) {
       path = `sprints/${sprintId}/cards/${cardId}/subtasks/${subtaskId}`;
+    }
 
     getData(path, (snapshot) => {
       const value = snapshot.val();
@@ -67,7 +68,9 @@ const DetailsForm = (): JSX.Element => {
     });
 
     getData(`sprints/${sprintId}`, (snapshot) => {
-      if (snapshot.exists()) setSprintName(snapshot.val().name);
+      if (snapshot.exists()) {
+        setSprintName(snapshot.val().name);
+      }
     });
   }, [cardId, subtaskId]);
 
