@@ -72,6 +72,8 @@ const DetailsForm = (): JSX.Element => {
       (snapshot) => {
         const value = snapshot.val();
 
+        document.title = `[${value.number}] - ${value.name}`;
+
         formik.setValues({
           ...value,
         });
