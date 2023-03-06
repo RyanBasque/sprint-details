@@ -8,7 +8,8 @@ type UseGetDataReturn = {
   getData: (
     path: string,
     callback: (snapshot: DataSnapshot) => void,
-    useFullPath?: boolean
+    useFullPath?: boolean,
+    onlyOnce?: boolean
   ) => void;
 };
 
@@ -18,16 +19,24 @@ export const useGetData = (): UseGetDataReturn => {
   const getData = (
     path: string,
     callback: (snapshot: DataSnapshot) => void,
-    useFullPath = false
+    useFullPath = false,
+    onlyOnce = false
   ): void => {
     let getDbRef = ref(database, `users/${user?.id}/${path}`);
 
     if (useFullPath) {
       getDbRef = ref(database, path);
     }
-    onValue(getDbRef, (snapshot) => {
-      callback(snapshot);
-    });
+
+    onValue(
+      getDbRef,
+      (snapshot) => {
+        callback(snapshot);
+      },
+      {
+        onlyOnce,
+      }
+    );
   };
 
   return { getData };

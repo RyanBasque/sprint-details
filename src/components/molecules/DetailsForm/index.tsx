@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Breadcrumb, Button, DatePicker } from "rsuite";
 import { useFormik } from "formik";
@@ -18,30 +18,36 @@ import * as S from "./styles";
 const DetailsForm = (): JSX.Element => {
   const navigate = useNavigate();
   const { sprintId, cardId, subtaskId } = useParams();
+
   const { showToast } = useToast();
   const { getData } = useGetData();
   const { setData } = useSetData();
 
-  const [cardDetails, setCardDetails] = useState<CardType>({} as CardType);
   const [sprintName, setSprintName] = useState<string>();
+  const [taskNumber, setTaskNumber] = useState<string>();
 
   const formik = useFormik<CardType>({
-    enableReinitialize: true,
     initialValues: {
-      name: cardDetails?.name || "",
-      dateCreated: cardDetails?.dateCreated || "",
-      number: cardDetails?.number || "",
-      timeEstimate: cardDetails?.timeEstimate || "",
-      conclusionDate: cardDetails?.conclusionDate || "",
-      description: cardDetails?.description || "",
-      subtasks: cardDetails?.subtasks,
+      name: "",
+      dateCreated: "",
+      number: "",
+      timeEstimate: "",
+      conclusionDate: "",
+      description: "",
+      subtasks: undefined,
     },
     onSubmit: (values): void => {
       let path = `sprints/${sprintId}/cards/${cardId}`;
       if (subtaskId) {
         path += `/subtasks/${subtaskId}`;
       }
-      setData(path, values);
+
+      const formattedValues = {
+        ...values,
+        ...(values.subtasks?.length && { subtasks: values.subtasks }),
+      };
+
+      setData(path, formattedValues);
 
       showToast({
         type: "success",
@@ -54,24 +60,55 @@ const DetailsForm = (): JSX.Element => {
     formik.setFieldValue("conclusionDate", date?.toString());
   };
 
-  useEffect(() => {
+  const getTask = (): void => {
     let path = `sprints/${sprintId}/cards/${cardId}`;
 
     if (subtaskId) {
-      path = `sprints/${sprintId}/cards/${cardId}/subtasks/${subtaskId}`;
+      path += `/subtasks/${subtaskId}`;
     }
 
-    getData(path, (snapshot) => {
-      const value = snapshot.val();
+    getData(
+      path,
+      (snapshot) => {
+        const value = snapshot.val();
 
-      setCardDetails(value);
-    });
+        formik.setValues({
+          ...value,
+        });
+      },
+      false,
+      true
+    );
+  };
 
+  const getTaskNumber = (): void => {
+    const path = `sprints/${sprintId}/cards/${cardId}`;
+
+    if (subtaskId) {
+      getData(path, (snapshot) => {
+        const number = snapshot.val().number;
+
+        setTaskNumber(number);
+      });
+
+      return;
+    }
+
+    setTaskNumber(undefined);
+  };
+
+  const getSprintName = (): void => {
     getData(`sprints/${sprintId}`, (snapshot) => {
       if (snapshot.exists()) {
         setSprintName(snapshot.val().name);
       }
     });
+  };
+
+  useEffect(() => {
+    getTask();
+    getTaskNumber();
+    getSprintName();
   }, [cardId, subtaskId]);
 
   useEffect(() => {
@@ -89,13 +126,15 @@ const DetailsForm = (): JSX.Element => {
               <Breadcrumb.Item>{sprintName}</Breadcrumb.Item>
               <Breadcrumb.Item
                 active={!subtaskId}
-                onClick={(): void => navigate(`/browse/${sprintId}/${cardId}`)}
                 style={{ cursor: "pointer" }}
+                onClick={(): void => navigate(`/browse/${sprintId}/${cardId}`)}
               >
-                {cardDetails?.number}
+                {taskNumber || formik.values?.number}
               </Breadcrumb.Item>
               {subtaskId && (
-                <Breadcrumb.Item active>{cardDetails?.number}</Breadcrumb.Item>
+                <Breadcrumb.Item active>
+                  {formik.values?.number}
+                </Breadcrumb.Item>
               )}
             </Breadcrumb>
           </S.BreadcrumbsContainer>
