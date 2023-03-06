@@ -19,6 +19,7 @@ const SubtaskController = ({
 }: SubtaskControllerProps): JSX.Element => {
   const { sprintId, cardId, subtaskId } = useParams();
   const { showToast } = useToast();
+
   const { user } = useAuth();
 
   const [subtaskName, setSubtaskName] = useState<string>("");

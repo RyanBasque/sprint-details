@@ -35,7 +35,7 @@ export const ReactiveInput = styled.input`
 
   padding: 10px 5px;
 
-  border-radius: 10px;
+  border-radius: 5px;
 
   &:focus {
     background-color: ${colors["light-gray"]};

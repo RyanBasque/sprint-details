@@ -4,21 +4,13 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 import SubtaskController from "components/molecules/SubtaskController";
 
-import { useGetData } from "requests/queries/useGetData";
-
-import { translateObject } from "utils/translateObject";
-
-import { CardType } from "models/card";
+import { SubTaskType } from "./types";
 import * as S from "./styles";
 
-const SubTask = (): JSX.Element | null => {
+const SubTask = ({ subtasks }: SubTaskType): JSX.Element | null => {
   const { sprintId, cardId, subtaskId } = useParams();
-  const { getData } = useGetData();
   const navigate = useNavigate();
 
-  const hasSubtaskId = !!subtaskId;
-
-  const [subtasks, setSubtasks] = useState<CardType[]>([]);
   const [showSubtasksController, setShowSubtasksController] =
     useState<boolean>(false);
 
@@ -27,19 +19,10 @@ const SubTask = (): JSX.Element | null => {
   };
 
   useEffect(() => {
-    getData(`sprints/${sprintId}/cards/${cardId}/subtasks`, (snapshot) => {
-      const value = translateObject<CardType>(snapshot.val());
-      setSubtasks(value);
-    });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardId, sprintId]);
-
-  useEffect(() => {
     setShowSubtasksController(false);
   }, [cardId, sprintId, subtaskId]);
 
-  if (hasSubtaskId) return null;
+  if (subtaskId) return null;
   return (
     <S.Container>
       <S.Header>

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
+    "deploy": "tsc && vite build && firebase deploy",
     "preview": "vite preview"
   },
   "dependencies": {
