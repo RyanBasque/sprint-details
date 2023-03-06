@@ -52,8 +52,6 @@ export const ReactiveTextarea = styled.textarea`
   transition: background 0.5s;
 
   width: 100%;
-  max-height: 400px;
-  min-height: 100px;
 
   resize: both;
 
@@ -61,7 +59,7 @@ export const ReactiveTextarea = styled.textarea`
 
   padding: 10px;
 
-  border-radius: 10px;
+  border-radius: 5px;
 
   resize: none;
 

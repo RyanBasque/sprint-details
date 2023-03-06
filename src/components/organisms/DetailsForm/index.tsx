@@ -107,6 +107,27 @@ const DetailsForm = (): JSX.Element => {
     });
   };
 
+  const handleChangeTextareaHeight = (): void => {
+    document
+      .querySelectorAll<HTMLElement>("[data-autoresize]")
+      .forEach((element) => {
+        element.style.boxSizing = "border-box";
+
+        const offset = element.offsetHeight - element.clientHeight;
+
+        element.addEventListener("input", ({ target }) => {
+          if (target) {
+            const typedTarget = target as HTMLElement;
+
+            typedTarget.style.height = "auto";
+            typedTarget.style.height = typedTarget.scrollHeight + offset + "px";
+          }
+        });
+
+        element.removeAttribute("data-autoresize");
+      });
+  };
+
   useEffect(() => {
     getTask();
     getTaskNumber();
@@ -114,9 +135,7 @@ const DetailsForm = (): JSX.Element => {
   }, [cardId, subtaskId]);
 
   useEffect(() => {
-    const textarea = document.getElementById("description");
-
-    if (textarea) textarea.style.height = `${textarea.scrollHeight}px`;
+    handleChangeTextareaHeight();
   }, [formik.values.description]);
 
   return (
@@ -162,6 +181,7 @@ const DetailsForm = (): JSX.Element => {
           <S.SubTitle>Descrição</S.SubTitle>
           <S.Wrapper>
             <S.ReactiveTextarea
+              data-autoresize
               placeholder="Escreva sua descrição"
               name="description"
               id="description"
