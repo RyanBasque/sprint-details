@@ -1,5 +1,5 @@
-import DetailsForm from "components/molecules/DetailsForm";
-import SubTask from "components/molecules/SubTask";
+import DetailsForm from "components/organisms/DetailsForm";
+import SubTask from "components/organisms/SubTask";
 
 import * as S from "./styles";
 

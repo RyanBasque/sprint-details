@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 
-import Sprint from "../Sprint";
+import Sprint from "components/organisms/Sprint";
 import CreateSprint from "components/molecules/CreateSprint";
 
 import { useAuth } from "context/AuthContext";

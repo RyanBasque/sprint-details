@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 
-import SubtaskController from "../SubtaskController";
+import SubtaskController from "components/molecules/SubtaskController";
 
 import { useGetData } from "requests/queries/useGetData";
 

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Header from "components/molecules/Header";
-import NavigationBar from "components/molecules/NavigationBar";
+import NavigationBar from "components/organisms/NavigationBar";
 
 import * as S from "./styles";
 

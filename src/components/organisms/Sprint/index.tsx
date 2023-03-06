@@ -2,8 +2,8 @@ import { useMemo, useState } from "react";
 import { RxTrash } from "react-icons/rx";
 
 import DeleteSprintModal from "components/atoms/DeleteSprintModal";
-import Createcard from "../CreateCard";
-import Card from "../Card";
+import Createcard from "components/molecules/CreateCard";
+import Card from "components/molecules/Card";
 
 import { translateObject } from "utils/translateObject";
 
