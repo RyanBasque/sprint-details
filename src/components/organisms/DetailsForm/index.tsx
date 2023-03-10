@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Breadcrumb, Button, DatePicker } from "rsuite";
 import { useFormik } from "formik";
 
 import { useSetData } from "requests/mutations/useSetData";
-import { useGetData } from "requests/queries/useGetData";
 
 import { useToast } from "hooks/useToast";
 
@@ -35,7 +34,6 @@ const DetailsForm = ({
       timeEstimate: "",
       conclusionDate: "",
       description: "",
-      subtasks: undefined,
     },
     onSubmit: (values): void => {
       let path = `sprints/${sprintId}/cards/${cardId}`;
@@ -43,12 +41,20 @@ const DetailsForm = ({
         path += `/subtasks/${subtaskId}`;
       }
 
-      const formattedValues = {
-        ...values,
-        ...(values.subtasks?.length && { subtasks: values.subtasks }),
+      const mappedValues: CardType = {
+        name: values.name,
+        dateCreated: values.dateCreated,
+        number: values.number,
+        timeEstimate: values.timeEstimate,
+        conclusionDate: values.conclusionDate,
+        description: values.description,
       };
 
-      setData(path, formattedValues);
+      if (!subtaskId) {
+        mappedValues.subtasks = values.subtasks;
+      }
+
+      setData(path, mappedValues);
 
       showToast({
         type: "success",
@@ -83,7 +89,12 @@ const DetailsForm = ({
   };
 
   useEffect(() => {
-    formik.setValues(card);
+    formik.setValues({
+      ...formik.initialValues,
+      ...card,
+    });
+
+    console.log(card);
   }, [card]);
 
   useEffect(() => {
