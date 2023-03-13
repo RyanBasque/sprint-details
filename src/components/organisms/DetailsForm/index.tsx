@@ -68,22 +68,14 @@ const DetailsForm = ({
   };
 
   const handleChangeTextareaHeight = (): void => {
-    document
-      .querySelectorAll<HTMLElement>("[data-autoresize]")
-      .forEach((element) => {
-        element.style.boxSizing = "border-box";
+    const element = document.querySelector<HTMLElement>("[data-autoresize]");
 
-        const offset = element.offsetHeight - element.clientHeight;
+    if (element) {
+      const offset = element.offsetHeight - element.clientHeight;
 
-        element.addEventListener("input", ({ target }) => {
-          if (target) {
-            const typedTarget = target as HTMLElement;
-
-            typedTarget.style.height = "auto";
-            typedTarget.style.height = typedTarget.scrollHeight + offset + "px";
-          }
-        });
-      });
+      element.style.height = "auto";
+      element.style.height = element.scrollHeight + offset + "px";
+    }
   };
 
   useEffect(() => {
