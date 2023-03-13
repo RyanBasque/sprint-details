@@ -79,10 +79,12 @@ const DetailsForm = ({
   };
 
   useEffect(() => {
-    formik.setValues({
+    const updatedFormikValue = {
       ...formik.initialValues,
       ...card,
-    });
+    };
+
+    formik.setValues(updatedFormikValue);
   }, [card]);
 
   useEffect(() => {

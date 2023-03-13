@@ -12,6 +12,9 @@ export const BreadcrumbsContainer = styled.div`
   font-size: 15px;
 
   padding-left: 5px;
+
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Name = styled.fieldset`

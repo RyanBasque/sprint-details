@@ -17,7 +17,7 @@ const Details = (): JSX.Element => {
 
   const [card, setCard] = useState<CardType>({} as CardType);
   const [subtasks, setSubtasks] = useState<CardType[]>([]);
-  const [cardNumber, setNumber] = useState<string>("");
+  const [cardNumber, setCardNumber] = useState<string>("");
   const [sprintName, setSprintName] = useState<string>("");
 
   const getTask = (): void => {
@@ -48,13 +48,13 @@ const Details = (): JSX.Element => {
       getData(path, (snapshot) => {
         const number = snapshot.val().number;
 
-        setNumber(number);
+        setCardNumber(number);
       });
 
       return;
     }
 
-    setNumber("");
+    setCardNumber("");
   };
 
   const getSprintName = (): void => {
