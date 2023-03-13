@@ -50,7 +50,7 @@ const DetailsForm = ({
         description: values.description,
       };
 
-      if (!subtaskId) {
+      if (values.subtasks) {
         mappedValues.subtasks = values.subtasks;
       }
 
@@ -83,8 +83,6 @@ const DetailsForm = ({
             typedTarget.style.height = typedTarget.scrollHeight + offset + "px";
           }
         });
-
-        element.removeAttribute("data-autoresize");
       });
   };
 
@@ -93,13 +91,11 @@ const DetailsForm = ({
       ...formik.initialValues,
       ...card,
     });
-
-    console.log(card);
   }, [card]);
 
   useEffect(() => {
     handleChangeTextareaHeight();
-  }, [formik.values.description]);
+  }, [card, formik.values.description]);
 
   return (
     <S.Container>
