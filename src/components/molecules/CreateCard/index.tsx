@@ -37,7 +37,7 @@ const Createcard = ({ sprintId }: CreatecardParams): JSX.Element => {
     <>
       <S.Container>
         <S.Button onClick={(): void => setShowModal(true)}>
-          <AiOutlinePlus size={15} />
+          <AiOutlinePlus size={13} />
           <p>Criar Card</p>
         </S.Button>
       </S.Container>

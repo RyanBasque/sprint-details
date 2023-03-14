@@ -6,7 +6,7 @@ export const Container = styled.div`
   width: 100%;
   height: auto;
 
-  padding: 20px 0;
+  padding: 10px 0;
 
   background-color: transparent;
 
@@ -36,6 +36,6 @@ export const Button = styled.button`
   p {
     margin-left: 10px;
 
-    font-size: 20px;
+    font-size: 16px;
   }
 `;

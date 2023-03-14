@@ -1,7 +1,5 @@
 import { Outlet } from "react-router-dom";
 
-import CardDetailsProvider from "context/CardDetailsContext";
-
 import Header from "components/molecules/Header";
 import NavigationBar from "components/organisms/NavigationBar";
 
@@ -12,10 +10,8 @@ const Browse = (): JSX.Element => {
     <>
       <Header />
       <S.Wrapper>
-        <CardDetailsProvider>
-          <NavigationBar />
-          <Outlet />
-        </CardDetailsProvider>
+        <NavigationBar />
+        <Outlet />
       </S.Wrapper>
     </>
   );

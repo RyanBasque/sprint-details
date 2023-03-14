@@ -120,7 +120,7 @@ const DetailsForm = ({
               onChange={formik.handleChange}
             />
           </S.Name>
-          <S.SubHeader>
+          {/* <S.SubHeader>
             <p>Data prevista de conclusão:</p>
             <DatePicker
               name="conclusionDate"
@@ -128,7 +128,7 @@ const DetailsForm = ({
               value={parseDate(formik.values.conclusionDate)}
               onChange={(value): void => handleChangeDate(value)}
             />
-          </S.SubHeader>
+          </S.SubHeader> */}
         </S.Header>
         <S.Body>
           <S.SubTitle>Descrição</S.SubTitle>

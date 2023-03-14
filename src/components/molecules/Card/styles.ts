@@ -6,9 +6,9 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
 
-  padding: 5px 0 5px 35px;
+  padding: 10px 0 10px 35px;
 
-  font-size: 16px;
+  font-size: 13px;
 
   cursor: pointer;
 

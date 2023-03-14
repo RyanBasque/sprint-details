@@ -36,6 +36,6 @@ export const Button = styled.button`
   p {
     margin-left: 10px;
 
-    font-size: 15px;
+    font-size: 13px;
   }
 `;

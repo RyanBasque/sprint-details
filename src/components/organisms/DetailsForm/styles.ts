@@ -102,8 +102,8 @@ export const Body = styled.div`
 `;
 
 export const SubTitle = styled.h2`
-  font-size: 17px;
-  font-weight: 300;
+  font-size: 15px;
+  font-weight: 500;
   color: ${colors.black};
 
   display: block;

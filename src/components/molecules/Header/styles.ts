@@ -7,17 +7,17 @@ export const Container = styled.header`
   align-items: center;
   justify-content: space-between;
 
-  background-color: ${colors["light-blue"]};
+  background-color: ${colors["blue"]};
 
-  min-height: 70px;
+  min-height: 40px;
 
-  padding: 0 20px;
+  padding: 10px 20px;
 `;
 
 export const LogoContainer = styled.div`
   i {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
 `;
 
@@ -29,7 +29,7 @@ export const Profile = styled.div`
   img {
     border-radius: 100%;
 
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
   }
 `;

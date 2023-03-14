@@ -19,7 +19,7 @@ export const Header = styled.div`
 export const SprintName = styled.div`
   padding: 10px 20px 10px 20px;
 
-  font-size: 20px;
+  font-size: 15px;
 `;
 
 export const TrashBtn = styled.button`
