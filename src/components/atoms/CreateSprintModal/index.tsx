@@ -62,6 +62,7 @@ const CreateSprintModal = ({
             placeholder="Sprint 1"
             name={name}
             onChange={(event): void => setName(event)}
+            data-test="create-sprint-name"
           />
         </S.Container>
         <S.Container>
@@ -70,6 +71,7 @@ const CreateSprintModal = ({
             block
             format="dd/MM/yyyy"
             placeholder="Selecione um período"
+            data-test="create-sprint-period"
             onChange={(event): void =>
               setRange({
                 dateInit: event ? event[0] : new Date(),
@@ -81,11 +83,16 @@ const CreateSprintModal = ({
         </S.Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={validateValues} appearance="primary">
+        <Button
+          onClick={validateValues}
+          appearance="primary"
+          data-test="create-sprint-submit"
+        >
           Ok
         </Button>
         <Button
           appearance="subtle"
+          data-test="create-sprint-reset"
           onClick={(): void => {
             resetValues();
             onClose();

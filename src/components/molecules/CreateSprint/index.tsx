@@ -32,7 +32,10 @@ const CreateSprint = (): JSX.Element => {
   return (
     <>
       <S.Container>
-        <S.Button onClick={(): void => setShowModal(true)}>
+        <S.Button
+          onClick={(): void => setShowModal(true)}
+          data-test="create-sprint"
+        >
           <AiOutlinePlus size={15} />
           <p>Criar Sprint</p>
         </S.Button>
